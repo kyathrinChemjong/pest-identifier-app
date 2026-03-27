@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Pest Identifier{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Hero Section -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-4 mb-4">
+                <i class="fas fa-seedling text-success me-2"></i>
+                Pest Identifier & Treatment Recommender
+            </h1>
+            <p class="lead mb-5 text-muted">
+                Identify crop pests quickly and get personalized treatment recommendations 
+                using organic, chemical, and biological methods
+            </p>
+            <a href="{{ url_for('identify') }}" class="btn btn-success btn-lg px-5 py-3 mb-5">
+                <i class="fas fa-camera me-2"></i>Start Identification
+            </a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mt-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-6">How It Works</h2>
+            <p class="text-muted">Three simple steps to protect your crops</p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                    <div class="display-1 text-success mb-3">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="h5">1. Upload Photo</h3>
+                    <p class="card-text text-muted">
+                        Take a clear photo of the pest on your crop and upload it to our system
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                    <div class="display-1 text-success mb-3">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="h5">2. AI Identification</h3>
+                    <p class="card-text text-muted">
+                        Our AI model analyzes the image and identifies the pest species with high accuracy
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                    <div class="display-1 text-success mb-3">
+                        <i class="fas fa-prescription-bottle"></i>
+                    </div>
+                    <h3 class="h5">3. Get Treatments</h3>
+                    <p class="card-text text-muted">
+                        Receive organic, chemical, and biological treatment recommendations
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Pests Section -->
+    <div class="row mt-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-6">Common Pests We Identify</h2>
+            <p class="text-muted">Click on any pest to learn more</p>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card pest-card" onclick="location.href='{{ url_for('pest_detail', pest_id='aphid') }}'">
+                <div class="card-body text-center">
+                    <i class="fas fa-bug fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Aphids</h5>
+                    <p class="small text-muted">Vegetables, Fruits</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card pest-card" onclick="location.href='{{ url_for('pest_detail', pest_id='whitefly') }}'">
+                <div class="card-body text-center">
+                    <i class="fas fa-bug fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Whiteflies</h5>
+                    <p class="small text-muted">Tomatoes, Peppers</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card pest-card" onclick="location.href='{{ url_for('pest_detail', pest_id='caterpillar') }}'">
+                <div class="card-body text-center">
+                    <i class="fas fa-bug fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Caterpillars</h5>
+                    <p class="small text-muted">Leafy greens, Cabbage</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card pest-card" onclick="location.href='{{ url_for('pest_detail', pest_id='spider_mite') }}'">
+                <div class="card-body text-center">
+                    <i class="fas fa-bug fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Spider Mites</h5>
+                    <p class="small text-muted">Strawberries, Beans</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="stat-card">
+                <h3>50+</h3>
+                <p>Pest Species</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="stat-card">
+                <h3>1000+</h3>
+                <p>Farmers Helped</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="stat-card">
+                <h3>95%</h3>
+                <p>Accuracy Rate</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="row mt-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <div class="card bg-light border-0 p-5">
+                <h3 class="mb-4">Ready to protect your crops?</h3>
+                <p class="mb-4">Upload a photo now and get instant pest identification and treatment recommendations.</p>
+                <div>
+                    <a href="{{ url_for('identify') }}" class="btn btn-success btn-lg px-5">
+                        <i class="fas fa-camera me-2"></i>Identify Pest Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

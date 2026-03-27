@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}My History{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h4 mb-0">
+                        <i class="fas fa-history me-2"></i>My Pest Identification History
+                    </h2>
+                </div>
+                <div class="card-body p-4">
+                    
+                    {% if history %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Image</th>
+                                        <th>Pest Identified</th>
+                                        <th>Confidence</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in history|reverse %}
+                                    <tr>
+                                        <td>{{ item.date }}</td>
+                                        <td>
+                                            {% if item.image %}
+                                                <img src="{{ url_for('static', filename='uploads/' + item.image) }}" 
+                                                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                            {% else %}
+                                                <i class="fas fa-bug fa-2x text-muted"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <strong>{{ item.pest }}</strong>
+                                        </td>
+                                        <td>
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar bg-success" 
+                                                     style="width: {{ item.confidence * 100 }}%;">
+                                                    {{ (item.confidence * 100)|int }}%
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="{{ url_for('pest_detail', pest_id=item.pest_id) }}" 
+                                               class="btn btn-sm btn-success">
+                                                <i class="fas fa-info-circle"></i> Details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h3 class="h1 text-success">{{ history|length }}</h3>
+                                        <p>Total Identifications</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h3 class="h1 text-success">
+                                            {{ history|map(attribute='pest')|unique|list|length }}
+                                        </h3>
+                                        <p>Unique Pests</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h3 class="h1 text-success">
+                                            {{ (history|map(attribute='confidence')|sum / history|length * 100)|int }}%
+                                        </h3>
+                                        <p>Avg. Confidence</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-history fa-4x text-muted mb-3"></i>
+                            <h3>No History Yet</h3>
+                            <p class="text-muted">You haven't identified any pests yet.</p>
+                            <a href="{{ url_for('identify') }}" class="btn btn-success">
+                                <i class="fas fa-camera me-2"></i>Identify Your First Pest
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

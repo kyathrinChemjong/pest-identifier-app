@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Pest Library{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-5">
+                <i class="fas fa-book text-success me-2"></i>
+                Pest Library
+            </h1>
+            <p class="lead text-muted">Browse our comprehensive database of crop pests</p>
+            {% if pests %}
+                <p class="text-success">Total pests: {{ pests|length }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <input type="text" class="form-control" id="pestSearch" 
+                   placeholder="Search pests by name...">
+        </div>
+    </div>
+
+    <!-- Pests Grid -->
+    <div class="row">
+        {% if pests %}
+            {% for pest_id, pest in pests.items() %}
+                {% if pest_id != 'non-pest' %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-bug fa-3x text-success"></i>
+                            </div>
+                            <h5 class="card-title text-success text-center">{{ pest.name }}</h5>
+                            <p class="card-subtitle text-muted text-center mb-3"><em>{{ pest.scientific_name }}</em></p>
+                            <p class="card-text">{{ pest.description[:100] if pest.description else 'No description available' }}...</p>
+                            
+                            <div class="mb-3">
+                                <strong>Crops:</strong><br>
+                                {% for crop in pest.crops_affected[:3] %}
+                                <span class="badge bg-light text-dark me-1">{{ crop }}</span>
+                                {% endfor %}
+                            </div>
+                            
+                            <a href="{{ url_for('pest_detail', pest_id=pest_id) }}" class="btn btn-success w-100">
+                                <i class="fas fa-info-circle me-2"></i>View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <h4>No pests found in database!</h4>
+                    <p>Please check your PEST_DATABASE in user.py</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+document.getElementById('pestSearch').addEventListener('keyup', function() {
+    const searchTerm = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.col-md-6');
+    
+    cards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        if (title.includes(searchTerm)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

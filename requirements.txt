@@ -1,7 +1,7 @@
-Flask==2.3.3
-Flask-Login==0.6.2
-torch==2.0.1
-torchvision==0.15.2
-Pillow==10.0.0
-numpy==1.24.3
-werkzeug==2.3.0
+Flask
+Flask-Login
+pillow
+numpy
+gunicorn
+# torch
+# torchvision
